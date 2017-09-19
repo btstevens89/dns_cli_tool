@@ -547,22 +547,23 @@ def infoblox_action(history):
                         selected_value = int(input('> ')) - 1
                         if selected_value >= 0 and selected_value < len(results):
                             ip_address_domain_name_dict[ip_address] = results[selected_value]
+    return 0
 
 def a_record_action(ip_address_domain_name_dict, action_type):
     clear_screen()
 
     print('''
-        ********************************************************************************
-        ****** Are you sure you want to {0: >6} the following record(s)? (y/n):    ******
-        ********************************************************************************
+************************************************************************
+*** Are you sure you want to {0: >6} the following record(s)? (y/n):  ***
+************************************************************************
         '''.format(action_type.upper()))
 
-    for ip_address, domain_name in ip_address_domain_name_dict():
+    for ip_address, domain_name in ip_address_domain_name_dict.items():
         print(ip_address + ' - ' + domain_name)
 
     selected_value = input('> ')
     if selected_value.lower() == 'y':
-        for ip_address, domain_name in ip_address_domain_name_dict():
+        for ip_address, domain_name in ip_address_domain_name_dict.items():
             if action_type == 'add':
                 print(' Adding New Record ' + ip_address + ' - ' + domain_name)
                 #new_record = objects.ARecordBase.create(conn, check_if_exists=False, ip=ip_address, name=domain_name)
@@ -616,6 +617,8 @@ def run_menu(menu_definitions):
 
         if selected_option['action']() == None:
             break
+
+    return 0
 
 # =======================
 #    MENUS DEFINITIONS
